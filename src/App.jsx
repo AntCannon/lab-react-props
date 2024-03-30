@@ -1,5 +1,6 @@
 import React from "react";
 import TopBar from "./Components/TopBar";
+import RecentDonations from "./Components/RecentDonations.jsx";
 import "./App.css";
 
 const targetAmount = 1000;
@@ -41,7 +42,12 @@ function App() {
     <>
       <TopBar />
       <main className="container">
-        <section className="sidebar">{/* Recent Donations */}</section>
+        <section className="sidebar">
+          <h2>Recent Donations</h2>
+          {donations.map(donation => (
+            <RecentDonations donation={donation} key={donation.id}/>
+          ))}
+        </section>
         <section className="">
           {/* Progress */}
           {/* Donation Form */}
