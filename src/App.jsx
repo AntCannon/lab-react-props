@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TopBar from "./Components/TopBar";
 import RecentDonations from "./Components/RecentDonations.jsx";
 import Progress from "./Components/Progress.jsx";
@@ -42,6 +42,9 @@ const donations = [
 const totalRaised = donations.reduce((sum, { amount }) => sum + amount, 0)
 
 function App() {
+
+  const [ donationsList, setDonations ] = useState(donations)
+
   return (
     <>
       <TopBar />
@@ -56,7 +59,7 @@ function App() {
           <Progress
             totalRaised={totalRaised}
             targetAmount={targetAmount} />
-          <DonationForm nextDonation={donations.length}/>
+          <DonationForm nextDonation={donations.length} donationChanger={setDonations} />
         </section>
       </main>
     </>
