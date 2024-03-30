@@ -1,6 +1,7 @@
 import React from "react";
 import TopBar from "./Components/TopBar";
 import RecentDonations from "./Components/RecentDonations.jsx";
+import Progress from "./Components/Progress.jsx";
 import "./App.css";
 
 const targetAmount = 1000;
@@ -37,6 +38,8 @@ const donations = [
   },
 ];
 
+const totalRaised = donations.reduce((sum, { amount }) => sum + amount, 0)
+
 function App() {
   return (
     <>
@@ -48,8 +51,10 @@ function App() {
             <RecentDonations donation={donation} key={donation.id}/>
           ))}
         </section>
-        <section className="">
-          {/* Progress */}
+        <section className="progress-and-form">
+          <Progress
+            totalRaised={totalRaised}
+            targetAmount={targetAmount} />
           {/* Donation Form */}
         </section>
       </main>
