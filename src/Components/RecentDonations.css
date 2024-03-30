@@ -1,0 +1,8 @@
+.donation {
+  margin-bottom: 20px;
+}
+
+.name-amount {
+  color: var(--primary);
+  font-weight: bold;
+}
