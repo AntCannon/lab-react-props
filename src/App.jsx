@@ -2,6 +2,7 @@ import React from "react";
 import TopBar from "./Components/TopBar";
 import RecentDonations from "./Components/RecentDonations.jsx";
 import Progress from "./Components/Progress.jsx";
+import DonationForm from "./Components/DonationForm.jsx";
 import "./App.css";
 
 const targetAmount = 1000;
@@ -55,7 +56,7 @@ function App() {
           <Progress
             totalRaised={totalRaised}
             targetAmount={targetAmount} />
-          {/* Donation Form */}
+          <DonationForm nextDonation={donations.length}/>
         </section>
       </main>
     </>
