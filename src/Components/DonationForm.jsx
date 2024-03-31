@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-export default function DonationForm({ nextDonation }) {
+export default function DonationForm({ donationsList, updateDonations }) {
+  const nextDonation = donationsList.length;
+
   const [formData, setFormData] = useState({
     name: "",
     caption: "",
-    amount: null,
-    id: nextDonation.id
+    amount: "",
+    id: nextDonation + 1
   });
 
   const handleChange = (event) => {
@@ -17,10 +19,14 @@ export default function DonationForm({ nextDonation }) {
     event.preventDefault();
 
     // Get the form data
-    const data = new FormData(event.target);
+    const data = formData;
+    donationsList.unshift(data)
 
     // Submit the form data to your server
-    console.log(data)
+
+    console.log(`handleSubmit `, donationsList)
+    updateDonations(donationsList)
+
   };
   
   return (
@@ -28,13 +34,31 @@ export default function DonationForm({ nextDonation }) {
       <h3>You could be donation <span className="secondary">#{nextDonation+1}!</span></h3>
       <form className="donation-form" onSubmit={handleSubmit} >
         <label>Name
-          <input type="text" className="input-name" name="name" placeholder="Your name" />
+          <input
+            type="text"
+            name="name"
+            placeholder="Your name"
+            className="input-name"
+            value={formData.name}
+            onChange={handleChange} />
         </label>
         <label>Caption
-          <input type="text" className="input-caption" name="caption" placeholder="Add a brief message" />
+          <input
+            type="text"
+            name="caption"
+            className="input-caption"
+            placeholder="Add a brief message"
+            value={formData.caption}
+            onChange={handleChange} />
         </label>
         <label>Amount
-          <input type="text" className="input-amount" name="amount" placeholder="0" />
+          <input
+            type="number"
+            name="amount"
+            className="input-amount"
+            placeholder="0"
+            value={formData.amount}
+            onChange={handleChange} />
         </label>
         <input type="submit" value="Donate!" />
       </form>

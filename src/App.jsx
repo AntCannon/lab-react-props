@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TopBar from "./Components/TopBar";
 import RecentDonations from "./Components/RecentDonations.jsx";
 import Progress from "./Components/Progress.jsx";
@@ -39,27 +39,45 @@ const donations = [
   },
 ];
 
-const totalRaised = donations.reduce((sum, { amount }) => sum + amount, 0)
 
 function App() {
+  // what changes?
+    // list of donations
+    // total raised
+    // raised percent
+  const [ donationsList, setDonationsList ] = useState(donations.reverse())
+  
+  console.log(`App-donationsList`, donationsList);
 
-  const [ donationsList, setDonations ] = useState(donations)
+  useEffect(() => {
+      
+  }) 
 
+  const totalRaised = donationsList.reduce((sum, { amount }) => sum + amount, 0);
+
+  const raisedPercent = totalRaised / targetAmount;
+
+  function updateDonations(arr) {
+    setDonationsList(arr)
+    console.log(`updateDonations`, arr)
+  }
+
+  
   return (
     <>
       <TopBar />
       <main className="container">
         <section className="sidebar">
           <h2>Recent Donations</h2>
-          {donations.map(donation => (
-            <RecentDonations donation={donation} key={donation.id}/>
-          ))}
+          {donationsList.map(donation => (
+      <RecentDonations donation={donation} key={donation.id}/>
+    ))}
         </section>
         <section className="progress-and-form">
           <Progress
             totalRaised={totalRaised}
             targetAmount={targetAmount} />
-          <DonationForm nextDonation={donations.length} donationChanger={setDonations} />
+          <DonationForm donationsList={donationsList} updateDonations={updateDonations} />
         </section>
       </main>
     </>
