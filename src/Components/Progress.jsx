@@ -1,7 +1,6 @@
 import './Progress.css';
 
-export default function Progress({ totalRaised, targetAmount }) {
-  const raisedPercent = totalRaised / targetAmount
+export default function Progress({ totalRaised, targetAmount, raisedPercent }) {
 
   return (
     <section className="progress">

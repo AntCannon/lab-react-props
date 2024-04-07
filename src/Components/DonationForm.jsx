@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-export default function DonationForm({ donationsList, updateDonations }) {
+export default function DonationForm({ donationsList, addDonation }) {
   const nextDonation = donationsList.length;
 
-  const [formData, setFormData] = useState({
+  const [donationForm, setDonationForm] = useState({
     name: "",
     caption: "",
     amount: "",
@@ -12,20 +12,18 @@ export default function DonationForm({ donationsList, updateDonations }) {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    setDonationForm({ ...donationForm, [name]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    // Get the form data
-    const data = formData;
-    donationsList.unshift(data)
-
-    // Submit the form data to your server
-
-    console.log(`handleSubmit `, donationsList)
-    updateDonations(donationsList)
+    addDonation(donationForm)
+    setDonationForm({
+      name: "",
+      caption: "",
+      amount: "",
+      id: nextDonation + 1
+    })
 
   };
   
@@ -39,7 +37,7 @@ export default function DonationForm({ donationsList, updateDonations }) {
             name="name"
             placeholder="Your name"
             className="input-name"
-            value={formData.name}
+            value={donationForm.name}
             onChange={handleChange} />
         </label>
         <label>Caption
@@ -48,7 +46,7 @@ export default function DonationForm({ donationsList, updateDonations }) {
             name="caption"
             className="input-caption"
             placeholder="Add a brief message"
-            value={formData.caption}
+            value={donationForm.caption}
             onChange={handleChange} />
         </label>
         <label>Amount
@@ -57,7 +55,7 @@ export default function DonationForm({ donationsList, updateDonations }) {
             name="amount"
             className="input-amount"
             placeholder="0"
-            value={formData.amount}
+            value={donationForm.amount}
             onChange={handleChange} />
         </label>
         <input type="submit" value="Donate!" />

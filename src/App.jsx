@@ -46,23 +46,15 @@ function App() {
     // total raised
     // raised percent
   const [ donationsList, setDonationsList ] = useState(donations.reverse())
-  
-  console.log(`App-donationsList`, donationsList);
 
-  useEffect(() => {
-      
-  }) 
-
-  const totalRaised = donationsList.reduce((sum, { amount }) => sum + amount, 0);
+  const totalRaised = donationsList.reduce((sum, { amount }) => sum + +amount, 0);
 
   const raisedPercent = totalRaised / targetAmount;
 
-  function updateDonations(arr) {
-    setDonationsList(arr)
-    console.log(`updateDonations`, arr)
+  function addDonation(donation) {
+    setDonationsList([donation, ...donationsList])
   }
 
-  
   return (
     <>
       <TopBar />
@@ -70,14 +62,19 @@ function App() {
         <section className="sidebar">
           <h2>Recent Donations</h2>
           {donationsList.map(donation => (
-      <RecentDonations donation={donation} key={donation.id}/>
+      <RecentDonations
+        donation={donation}
+        key={donation.id}/>
     ))}
         </section>
         <section className="progress-and-form">
           <Progress
             totalRaised={totalRaised}
-            targetAmount={targetAmount} />
-          <DonationForm donationsList={donationsList} updateDonations={updateDonations} />
+            targetAmount={targetAmount}
+            raisedPercent={raisedPercent} />
+          <DonationForm
+            donationsList={donationsList}
+            addDonation={addDonation} />
         </section>
       </main>
     </>
